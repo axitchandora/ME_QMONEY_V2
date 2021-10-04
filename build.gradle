@@ -1,0 +1,172 @@
+
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'maven-publish'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.github.spotbugs' version '4.5.0'
+}
+
+ext {
+    buildId = System.currentTimeMillis()
+    // Dependency versions
+    springBootVersion = '2.1.8.RELEASE'
+    springCoreVersion = '5.1.9.RELEASE'
+    jacksonVersion = "2.9.8"
+}
+
+buildDir = '/tmp/external_build'
+    
+apply plugin: "idea"
+apply plugin: "checkstyle"
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+task installGitHooks(type: Copy) {
+    from new File(rootProject.rootDir, "__CRIO__/pre-push")
+    into { new File(rootProject.rootDir, ".git/hooks") }
+    fileMode 0777
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+allprojects {
+    buildDir = '/tmp/external_build'
+}
+
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "idea"
+    apply plugin: "checkstyle"
+    apply plugin: "pmd"
+    apply plugin: "jacoco"
+    apply plugin: "com.github.spotbugs"
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        reports {
+            junitXml.enabled = true
+            def destinationDirectory = System.getProperty("user.home") + "/.gradle/daemon/${buildId}/test-results"
+            junitXml.destination = file(destinationDirectory)
+            html.enabled = true
+        }
+        useJUnitPlatform {
+        }
+        testLogging.events ("STANDARD_ERROR")
+        testLogging.events ("STANDARD_OUT")
+        afterSuite { desc, result ->
+            if (!desc.parent) {
+                println "\nTEST RESULT: ${result.resultType}"
+                println "TEST SUMMARY: RAN ${result.testCount} TESTS, " +
+                        "${result.successfulTestCount} SUCCEEDED, " +
+                        "${result.failedTestCount} FAILED, " +
+                        "${result.skippedTestCount} SKIPPED"
+            }
+        }
+    }
+
+    checkstyle {
+        ignoreFailures = true
+        toolVersion "7.8.1"
+        configFile file("${rootProject.projectDir}/__CRIO__/checkstyle.xml")
+    }
+
+    pmd {
+        ignoreFailures = true
+        toolVersion = "6.10.0"
+        sourceSets = [sourceSets.main]
+        ruleSetFiles = files("${rootProject.projectDir}/__CRIO__/ruleset.xml")
+        ignoreFailures = true
+    }
+
+    spotbugsMain {
+        ignoreFailures = true
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    spotbugsTest {
+        ignoreFailures = true
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    jacoco {
+        toolVersion = "0.8.5"
+        reportsDir = file("$buildDir/customJacocoReportDir")
+    }
+
+    task installGitHooks(type: Copy) {
+        from new File(rootProject.rootDir, '__CRIO__/pre-push')
+        into { new File(rootProject.rootDir, '.git/hooks') }
+        fileMode 0777
+    }
+
+    build.dependsOn installGitHooks
+}
+
+compileJava.dependsOn clean
+
+
+task cleanupCrioJars {
+    doLast {
+        def userHome = System.properties['user.home']
+        def mavenDir = new File(userHome, '.m2/repository/com/crio/')
+
+        if (mavenDir.exists()) {
+            delete mavenDir
+        }
+    }
+}
+
+task verifyMavenJarsCreated {
+    dependsOn cleanupCrioJars
+    dependsOn publishToMavenLocal
+    doLast {
+        def userHome = System.properties['user.home']
+        def mavenDir = new File(userHome, '.m2/repository/com/crio/warmup/annual-return/1.0.0')
+
+        if (!mavenDir.exists()) {
+            throw new Exception("maven repository directory not created")
+        }
+
+        // Then, Check if the file exists.
+        def jarFile = new File(mavenDir, 'annual-return-1.0.0.jar')
+        def pomFile = new File(mavenDir, 'annual-return-1.0.0.pom')
+
+        if (!jarFile.exists() || !pomFile.exists()) {
+            throw new Exception("maven repository directory exists, but files do not exist")
+        }
+
+        println("All Maven repository files are created and in place")
+    }
+}
+

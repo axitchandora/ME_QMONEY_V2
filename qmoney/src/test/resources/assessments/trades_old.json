@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "CTS",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2017-01-05"
+  },
+  {
+    "symbol": "MMM",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2016-01-11"
+  },
+  {
+    "symbol": "ABBV",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2016-01-29"
+  }
+]
