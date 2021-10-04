@@ -1,0 +1,17 @@
+__CRIO__/metadata.json merge=copy-merge
+settings.gradle merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/portfolio/PortfolioManagerTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/portfolio/PortfolioManagerFactoryTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/portfolio/PortfolioManagerPerformanceTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/ModuleOneTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/PortfolioManagerApplicationTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/ModuleThreeTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/quotes/StockQuoteServiceFactoryTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/quotes/AlphavantageLimitTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/quotes/AlphavantageServiceTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/quotes/TiingoServiceTest.java merge=copy-merge
+qmoney/src/test/java/com/crio/warmup/stock/ModuleTwoTest.java merge=copy-merge
+qmoney/src/main/java/com/crio/warmup/stock/quotes/StockQuotesService.java merge=copy-merge
+qmoney/src/main/java/com/crio/warmup/stock/portfolio/PortfolioManager.java merge=copy-merge
+qmoney/src/main/java/com/crio/warmup/stock/dto/Candle.java merge=copy-merge
+qmoney/src/main/java/com/crio/warmup/stock/dto/TiingoCandle.java merge=copy-merge
