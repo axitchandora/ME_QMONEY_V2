@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "CISCO",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2017-01-05"
+  },
+  {
+    "symbol": "CSCO",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2017-01-09"
+  },
+  {
+    "symbol": "CTS",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2018-01-29"
+  }
+]
