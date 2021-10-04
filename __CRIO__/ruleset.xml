@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) Crio.Do 2019. All rights reserved
+  ~  */
+  -->
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  name="CrioRules"
+  xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+  xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+  <description>Exclude certain rules</description>
+  <rule ref="category/java/errorprone.xml">
+    <exclude name="BeanMembersShouldSerialize"/>
+    <exclude name="DataflowAnomalyAnalysis"/>
+  </rule>
+</ruleset>

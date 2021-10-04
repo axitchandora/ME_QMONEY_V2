@@ -1,0 +1,20 @@
+[
+  {
+    "symbol": "MSFT",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-07"
+  },
+  {
+    "symbol": "CSCO",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-09"
+  },
+  {
+    "symbol": "CTS",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-29"
+  }
+]
