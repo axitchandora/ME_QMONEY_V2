@@ -6,6 +6,7 @@ import com.crio.warmup.stock.dto.AnnualizedReturn;
 import com.crio.warmup.stock.dto.PortfolioTrade;
 import com.crio.warmup.stock.dto.TotalReturnsDto;
 import com.crio.warmup.stock.log.UncaughtExceptionHandler;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
@@ -52,6 +53,21 @@ public class PortfolioManagerApplication {
      return Collections.emptyList();
   }
 
+  // TODO:
+  //  After refactor, make sure that the tests pass by using these two commands
+  //  ./gradlew test --tests PortfolioManagerApplicationTest.readTradesFromJson
+  //  ./gradlew test --tests PortfolioManagerApplicationTest.mainReadFile
+  public static List<PortfolioTrade> readTradesFromJson(String filename) throws IOException, URISyntaxException {
+     return Collections.emptyList();
+  }
+
+
+  // TODO:
+  //  Build the Url using given parameters and use this function in your code to cann the API.
+  public static String prepareUrl(PortfolioTrade trade, LocalDate endDate, String token) {
+     return Collections.emptyList();
+  }
+
 
 
 
@@ -70,5 +86,6 @@ public class PortfolioManagerApplication {
 
 
   }
+
 }
 
