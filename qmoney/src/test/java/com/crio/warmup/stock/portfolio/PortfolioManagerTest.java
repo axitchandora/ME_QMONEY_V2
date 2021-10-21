@@ -85,6 +85,7 @@ class PortfolioManagerTest {
     //given
     String moduleToRun = null;
 
+    moduleToRun = "ADDITIONAL_REFACTOR";
 
     if (moduleToRun.equals("REFACTOR")) {
       Mockito.doReturn(getCandles(aaplQuotes))
