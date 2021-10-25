@@ -31,9 +31,12 @@ public class AlphavantageService implements StockQuotesService {
   //       should also filter the dates based on startDate and endDate. Make sure that
   //       result contains the records for for startDate and endDate after filtering.
   //    5. Return a sorted List<Candle> sorted ascending based on Candle#getDate
-  // Note:
-  // 1. Make sure you use {RestTemplate#getForObject(URI, String)} else the test will fail.
-  // 2. Run the tests using command below and make sure it passes:
+  //  IMP: Do remember to write readable and maintainable code, There will be few functions like
+  //    Checking if given date falls within provided date range, etc.
+  //    Make sure that you write Unit tests for all such functions.
+  //  Note:
+  //  1. Make sure you use {RestTemplate#getForObject(URI, String)} else the test will fail.
+  //  2. Run the tests using command below and make sure it passes:
   //    ./gradlew test --tests AlphavantageServiceTest
   //CHECKSTYLE:OFF
     //CHECKSTYLE:ON
