@@ -1,4 +1,3 @@
-
 package com.crio.warmup.stock.portfolio;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -81,6 +80,7 @@ class PortfolioManagerTest {
       throws Exception {
     //given
     String moduleToRun = null;
+    moduleToRun = "REFACTOR";
 
 
     if (moduleToRun.equals("REFACTOR")) {
