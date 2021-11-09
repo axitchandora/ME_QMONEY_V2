@@ -56,10 +56,6 @@ class TiingoServiceTest {
   void getStockQuoteSingle() throws Exception {
     Mockito.doReturn(sampleTiingoResponse)
         .when(restTemplate).getForObject(anyString(), eq(String.class));
-    Mockito.doReturn(sampleTiingoResponse)
-        .when(restTemplate).getForObject(anyString(), eq(String.class));
-    Mockito.doReturn(sampleTiingoResponse)
-        .when(restTemplate).getForObject(anyString(), eq(String.class));
 
     List<Candle> candles = tiingoService
         .getStockQuote("GOOGL",
