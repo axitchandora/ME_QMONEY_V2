@@ -84,6 +84,7 @@ class PortfolioManagerTest {
       throws Exception {
     //given
     String moduleToRun = null;
+    moduleToRun = "REFACTOR";
 
     moduleToRun = "ADDITIONAL_REFACTOR";
 
