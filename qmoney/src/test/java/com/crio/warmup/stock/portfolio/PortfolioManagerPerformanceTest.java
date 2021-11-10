@@ -1,6 +1,7 @@
 
 package com.crio.warmup.stock.portfolio;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -85,34 +86,14 @@ class PortfolioManagerPerformanceTest {
 
 
   @Test
-  public void calculateExtrapolatedAnnualizedReturnWithException()
-      throws JsonProcessingException, StockQuoteServiceException, InterruptedException {
-    try {
-      runConcurrencyTest(true);
-    } catch (Throwable th) {
-      if (!(th instanceof StockQuoteServiceException)) {
-        fail("Method throwed runtime exception");
-      }
-    }
+  public void calculateExtrapolatedAnnualizedReturnWithException() {
+    assertThrows(StockQuoteServiceException.class, () -> runConcurrencyTest(true));
   }
+
 
   private void runConcurrencyTest(boolean withException)
       throws JsonProcessingException, StockQuoteServiceException, InterruptedException {
-    String moduleToRun = null;
-
-
-    if (moduleToRun.equals("REFACTOR")) {
-      Mockito.doReturn(getCandles(aaplQuotes, false)).when(portfolioManager)
-          .getStockQuote(eq("AAPL"), any(), any());
-      Mockito.doReturn(getCandles(msftQuotes, false)).when(portfolioManager)
-          .getStockQuote(eq("MSFT"), any(), any());
-      Mockito.doReturn(getCandles(googlQuotes, false)).when(portfolioManager)
-          .getStockQuote(eq("GOOGL"), any(), any());
-    }
-
-    if (moduleToRun.equals("ADDITIONAL_REFACTOR")) {
-      this.portfolioManager = getPortfolioManager(withException);
-    }
+    this.portfolioManager = getPortfolioManager(withException);
     //given
     PortfolioTrade trade1 = new PortfolioTrade("AAPL", 50, LocalDate.parse("2019-01-02"));
     PortfolioTrade trade2 = new PortfolioTrade("GOOGL", 100, LocalDate.parse("2019-01-02"));
