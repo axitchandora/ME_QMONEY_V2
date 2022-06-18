@@ -1,9 +1,6 @@
 
 package com.crio.warmup.stock;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import com.crio.warmup.stock.dto.Candle;
 import com.crio.warmup.stock.dto.PortfolioTrade;
 import com.crio.warmup.stock.dto.TiingoCandle;
@@ -12,6 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 class ModuleThreeRefactorTest {
 

@@ -1,14 +1,15 @@
 
 package com.crio.warmup.stock.optional;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import com.crio.warmup.stock.PortfolioManagerApplication;
 import com.crio.warmup.stock.dto.PortfolioTrade;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class ModuleTwoTest {
 
