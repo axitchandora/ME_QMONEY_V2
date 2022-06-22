@@ -303,7 +303,7 @@ public class PortfolioManagerApplication {
     // printJsonObject(mainCalculateSingleReturn(args));
     // printJsonObject(mainCalculateSingleReturn(new String[] {"trades.json", "2020-01-01"}));
     // printJsonObject(mainCalculateReturnsAfterRefactor(args));
-    printJsonObject(mainCalculateReturnsAfterNewServiceProvider(new String[] {"tradesOfSanket.json", "2020-01-01"}));
+    //printJsonObject(mainCalculateReturnsAfterNewServiceProvider(new String[] {"tradesOfSanket.json", "2020-01-01"}));
   }
 
 }

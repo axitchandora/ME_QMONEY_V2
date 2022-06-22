@@ -59,8 +59,13 @@ public class AlphavantageService implements StockQuotesService {
   @Override
   public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to)
       throws JsonProcessingException {
-    String tiingoURL = buildURL(symbol);
-    String responseString = restTemplate.getForObject(tiingoURL, String.class);
+    String checkPremiumResponse = "{\n"
+        + "    \"Note\": \"Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.\"\n"
+        + "}";
+    String responseString;
+    do{
+      responseString = restTemplate.getForObject(buildURL(symbol), String.class);
+    }while(responseString.length()== checkPremiumResponse.length());
     AlphavantageDailyResponse alphavantageDailyResponse =
         getObjectMapper().readValue(responseString, AlphavantageDailyResponse.class);
     List<Candle> alphavantageCandles = new ArrayList<>();
@@ -88,7 +93,11 @@ public class AlphavantageService implements StockQuotesService {
   }
 
   protected String getToken() {
-    String[] token = {"X3UC6ZE00MQN6STI", "LOIX57FBWRYIV1S9"};
+    String[] token = {"X3UC6ZE00MQN6STI", "LOIX57FBWRYIV1S9", "6IL9NDHJ3MCBAYKT",
+        "STABTAUMLW1JT7DD", "OOPZ77IXVUNN4M91", "7L9V7JCRY5L1HLYH", "TLJR1BFZIKLWR17J",
+        "B6KYMGX709BPM9XQ", "RKOZY6FP1YHLR6AN", "ZDSTSWWZ378W1SR4", "MDZ156R8TTVI7PZX",
+        "I95W43T3AAOPQW8L","ZUXE54IGLRJQ15NP","TQH49SNOW1FDR9I7","N4WWH8CA81A8TP7N","6T08YMN98PCHL2SZ","FOZ3XNP8XSGZLVYU"
+      };
     Random random = new Random();
     return token[random.nextInt(token.length)];
   }
