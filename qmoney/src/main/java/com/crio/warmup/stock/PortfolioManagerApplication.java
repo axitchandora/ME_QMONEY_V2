@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -226,7 +225,7 @@ public class PortfolioManagerApplication {
   }
 
   private static String readFileAsString(String fileName) throws IOException, URISyntaxException {
-    return new String(Files.readAllBytes(resolveFileFromResources(fileName).toPath()),"UTF-8");
+    return new String(Files.readAllBytes(resolveFileFromResources(fileName).toPath()), "UTF-8");
   }
 
   // TODO: CRIO_TASK_MODULE_CALCULATIONS
@@ -252,10 +251,10 @@ public class PortfolioManagerApplication {
 
 
   // TODO: CRIO_TASK_MODULE_REFACTOR
-  //  Once you are done with the implementation inside PortfolioManagerImpl and
-  //  PortfolioManagerFactory, create PortfolioManager using PortfolioManagerFactory.
-  //  Refer to the code from previous modules to get the List<PortfolioTrades> and endDate, and
-  //  call the newly implemented method in PortfolioManager to calculate the annualized returns.
+  // Once you are done with the implementation inside PortfolioManagerImpl and
+  // PortfolioManagerFactory, create PortfolioManager using PortfolioManagerFactory.
+  // Refer to the code from previous modules to get the List<PortfolioTrades> and endDate, and
+  // call the newly implemented method in PortfolioManager to calculate the annualized returns.
 
   // Note:
   // Remember to confirm that you are getting same results for annualized returns as in Module 3.
@@ -264,13 +263,34 @@ public class PortfolioManagerApplication {
       throws Exception {
     String file = args[0];
     LocalDate endDate = LocalDate.parse(args[1]);
-    String contents = readFileAsString(file);    
-    ObjectMapper objectMapper = getObjectMapper();    
+    String contents = readFileAsString(file);
+    ObjectMapper objectMapper = getObjectMapper();
     PortfolioManager portfolioManager =
         PortfolioManagerFactory.getPortfolioManager(new RestTemplate());
-    List<PortfolioTrade> portfolioTrades=objectMapper.readValue(contents,new TypeReference<List<PortfolioTrade>>() {});    
+    List<PortfolioTrade> portfolioTrades =
+        objectMapper.readValue(contents, new TypeReference<List<PortfolioTrade>>() {});
     return portfolioManager.calculateAnnualizedReturn(portfolioTrades, endDate);
   }
+
+  // Testing New Impementation Via PortfolioManager & StockQuotesService
+  public static List<AnnualizedReturn> mainCalculateReturnsAfterNewServiceProvider(String[] args)
+      throws Exception {
+    String file = args[0];
+    LocalDate endDate = LocalDate.parse(args[1]);
+    String contents = readFileAsString(file);
+    ObjectMapper objectMapper = getObjectMapper();
+    PortfolioManager portfolioManager =
+        PortfolioManagerFactory.getPortfolioManager(new RestTemplate());
+    List<PortfolioTrade> portfolioTrades =
+        objectMapper.readValue(contents, new TypeReference<List<PortfolioTrade>>() {});
+    // List<Candle> candles =
+    // ((PortfolioManagerImpl)portfolioManager).getStockQuote(portfolioTrade.getSymbol(),
+    // portfolioTrade.getPurchaseDate(), endDate);
+    List<AnnualizedReturn> aa =
+        portfolioManager.calculateAnnualizedReturn(portfolioTrades, endDate);
+    return aa;
+  }
+
 
 
   public static void main(String[] args) throws Exception {
@@ -280,9 +300,10 @@ public class PortfolioManagerApplication {
     // printJsonObject(mainReadQuotes(args));
     // printJsonObject(mainReadQuotes(new String[]{"trades.json" ,"2020-01-01"}));
 
-    //printJsonObject(mainCalculateSingleReturn(args));
-    //printJsonObject(mainCalculateSingleReturn(new String[] {"trades.json", "2020-01-01"}));
-    printJsonObject(mainCalculateReturnsAfterRefactor(args));
+    // printJsonObject(mainCalculateSingleReturn(args));
+    // printJsonObject(mainCalculateSingleReturn(new String[] {"trades.json", "2020-01-01"}));
+    // printJsonObject(mainCalculateReturnsAfterRefactor(args));
+    printJsonObject(mainCalculateReturnsAfterNewServiceProvider(new String[] {"tradesOfSanket.json", "2020-01-01"}));
   }
 
 }

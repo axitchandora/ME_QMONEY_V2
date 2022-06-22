@@ -1,0 +1,74 @@
+[
+  {
+    "symbol": "AAPL",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "MSFT",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "GOOGL",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "CSCO",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "CTS",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "AIG",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "JPM",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "MA",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "PG",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "JNJ",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "BABA",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "AMZN",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  }
+]

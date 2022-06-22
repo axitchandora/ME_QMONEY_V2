@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import com.crio.warmup.stock.dto.AnnualizedReturn;
 import com.crio.warmup.stock.dto.PortfolioTrade;
 import com.crio.warmup.stock.dto.TiingoCandle;
+import com.crio.warmup.stock.quotes.StockQuotesService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -31,6 +32,8 @@ This class is supposed to be used by assessments only.
 @ExtendWith(MockitoExtension.class)
 class PortfolioManagerTest {
 
+  @Mock
+  private StockQuotesService stockQuotesService;
 
   @Mock
   private RestTemplate restTemplate;
@@ -83,6 +86,7 @@ class PortfolioManagerTest {
     String moduleToRun = null;
     moduleToRun = "REFACTOR";
 
+    moduleToRun = "ADDITIONAL_REFACTOR";
 
     if (moduleToRun.equals("REFACTOR")) {
       Mockito.doReturn(getCandles(aaplQuotes))
@@ -98,6 +102,15 @@ class PortfolioManagerTest {
     List<PortfolioTrade> portfolioTrades = Arrays
         .asList(new PortfolioTrade[]{trade1, trade2, trade3});
 
+    if (moduleToRun.equals("ADDITIONAL_REFACTOR")) {
+      portfolioManager = new PortfolioManagerImpl(stockQuotesService);
+      Mockito.doReturn(getCandles(aaplQuotes))
+          .when(stockQuotesService).getStockQuote(eq("AAPL"), any(), any());
+      Mockito.doReturn(getCandles(msftQuotes))
+          .when(stockQuotesService).getStockQuote(eq("MSFT"), any(), any());
+      Mockito.doReturn(getCandles(googlQuotes))
+          .when(stockQuotesService).getStockQuote(eq("GOOGL"), any(), any());
+    }
 
     //when
     List<AnnualizedReturn> annualizedReturns = portfolioManager
