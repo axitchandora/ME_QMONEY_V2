@@ -115,8 +115,7 @@ public class AlphavantageService implements StockQuotesService {
         "I95W43T3AAOPQW8L", "ZUXE54IGLRJQ15NP", "TQH49SNOW1FDR9I7", "N4WWH8CA81A8TP7N",
         "6T08YMN98PCHL2SZ", "FOZ3XNP8XSGZLVYU"};
     Random random = new Random();
-    //return token[random.nextInt(token.length)];
-    return token[0];
+    return token[random.nextInt(token.length)];
   }
 
   private static ObjectMapper getObjectMapper() {
