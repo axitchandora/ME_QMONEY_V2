@@ -22,19 +22,12 @@ public enum StockQuoteServiceFactory {
   //  Run the tests using command below and make sure it passes
   //  ./gradlew test --tests StockQuoteServiceFactory
 
-  // public StockQuotesService getService(String provider,  RestTemplate restTemplate) {
-  //   switch ((provider!=null)?provider.toLowerCase():"alphavantage") {
-  //     case "tiingo":
-  //       return new TiingoService(restTemplate);
-  //     default:
-  //       return new AlphavantageService(restTemplate);
-  //     }
-  // }
-  public StockQuotesService getService(String provider,  RestTemplate restTemplate){
-    String provider_check = "tiingo";
-    StockQuotesService quote_provider;
-    if(provider.equalsIgnoreCase(provider_check)) quote_provider = new TiingoService(restTemplate);
-    else quote_provider = new AlphavantageService(restTemplate);
-    return quote_provider;
+  public StockQuotesService getService(String provider,  RestTemplate restTemplate) {
+    switch ((provider!=null)?provider.toLowerCase():"alphavantage") {
+      case "tiingo":
+        return new TiingoService(restTemplate);
+      default:
+        return new AlphavantageService(restTemplate);
+      }
   }
 }

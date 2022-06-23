@@ -37,7 +37,6 @@ public class PortfolioManagerApplication {
   // - Go through all of the trades in the given file,
   // - Prepare the list of all symbols a portfolio has.
   // - if "trades.json" has trades like
-  // [{ "symbol": "MSFT"}, { "symbol": "AAPL"}, { "symbol": "GOOGL"}]
   // Then you should return ["MSFT", "AAPL", "GOOGL"]
   // Hints:
   // 1. Go through two functions provided - #resolveFileFromResources() and #getObjectMapper
@@ -307,4 +306,9 @@ public class PortfolioManagerApplication {
   }
 
 }
+
+
+
+
+
 

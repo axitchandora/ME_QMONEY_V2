@@ -17,6 +17,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import com.crio.warmup.stock.dto.AlphavantageDailyResponse;
+import com.crio.warmup.stock.dto.Candle;
+import com.crio.warmup.stock.exception.StockQuoteServiceException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,16 +65,25 @@ public class AlphavantageService implements StockQuotesService {
 
   @Override
   public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to)
-      throws JsonProcessingException {
-    String checkPremiumResponse = "{\n"
-        + "    \"Note\": \"Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.\"\n"
-        + "}";
-    String responseString;
-    do{
-      responseString = restTemplate.getForObject(buildURL(symbol), String.class);
-    }while(responseString.length()== checkPremiumResponse.length());
-    AlphavantageDailyResponse alphavantageDailyResponse =
-        getObjectMapper().readValue(responseString, AlphavantageDailyResponse.class);
+      throws StockQuoteServiceException {
+    // String checkPremiumResponse = "{\n"
+    //     + "    \"Note\": \"Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.\"\n"
+    //     + "}";
+    // String responseString;
+    // do{
+    // responseString = restTemplate.getForObject(buildURL(symbol), String.class);
+    // }while(responseString.length()== checkPremiumResponse.length());
+    String responseString = restTemplate.getForObject(buildURL(symbol), String.class);
+
+    AlphavantageDailyResponse alphavantageDailyResponse;
+    try {
+      alphavantageDailyResponse =
+          getObjectMapper().readValue(responseString, AlphavantageDailyResponse.class);
+      if (alphavantageDailyResponse.getCandles() == null || responseString==null)
+        throw new StockQuoteServiceException("Invalid Response Found");
+    } catch (JsonProcessingException e) {
+      throw new StockQuoteServiceException(e.getMessage());
+    }
     List<Candle> alphavantageCandles = new ArrayList<>();
     Map<LocalDate, AlphavantageCandle> mapOFDateAndAlphavantageCandle =
         alphavantageDailyResponse.getCandles();
@@ -96,10 +112,11 @@ public class AlphavantageService implements StockQuotesService {
     String[] token = {"X3UC6ZE00MQN6STI", "LOIX57FBWRYIV1S9", "6IL9NDHJ3MCBAYKT",
         "STABTAUMLW1JT7DD", "OOPZ77IXVUNN4M91", "7L9V7JCRY5L1HLYH", "TLJR1BFZIKLWR17J",
         "B6KYMGX709BPM9XQ", "RKOZY6FP1YHLR6AN", "ZDSTSWWZ378W1SR4", "MDZ156R8TTVI7PZX",
-        "I95W43T3AAOPQW8L","ZUXE54IGLRJQ15NP","TQH49SNOW1FDR9I7","N4WWH8CA81A8TP7N","6T08YMN98PCHL2SZ","FOZ3XNP8XSGZLVYU"
-      };
+        "I95W43T3AAOPQW8L", "ZUXE54IGLRJQ15NP", "TQH49SNOW1FDR9I7", "N4WWH8CA81A8TP7N",
+        "6T08YMN98PCHL2SZ", "FOZ3XNP8XSGZLVYU"};
     Random random = new Random();
-    return token[random.nextInt(token.length)];
+    //return token[random.nextInt(token.length)];
+    return token[0];
   }
 
   private static ObjectMapper getObjectMapper() {
@@ -107,6 +124,13 @@ public class AlphavantageService implements StockQuotesService {
     objectMapper.registerModule(new JavaTimeModule());
     return objectMapper;
   }
+  // TODO: CRIO_TASK_MODULE_EXCEPTIONS
+  // 1. Update the method signature to match the signature change in the interface.
+  // 2. Start throwing new StockQuoteServiceException when you get some invalid response from
+  // Alphavantage, or you encounter a runtime exception during Json parsing.
+  // 3. Make sure that the exception propagates all the way from PortfolioManager, so that the
+  // external user's of our API are able to explicitly handle this exception upfront.
+  // CHECKSTYLE:OFF
 
 }
 
