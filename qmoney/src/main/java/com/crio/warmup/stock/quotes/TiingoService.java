@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 public class TiingoService implements StockQuotesService {
@@ -30,14 +31,20 @@ public class TiingoService implements StockQuotesService {
   public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to)
       throws StockQuoteServiceException {
     String tiingoURL = buildURL(symbol, from, to);
-    String responseString = restTemplate.getForObject(tiingoURL, String.class);
+    String responseString=null;
+    try {
+      responseString = restTemplate.getForObject(tiingoURL, String.class);
+    } catch (HttpClientErrorException e) {
+        throw new StockQuoteServiceException("TooManyRequests: 429 Unknown Status Code");
+    }
+    
     TiingoCandle[] tiingoCandleArray;
     try {
       tiingoCandleArray = getObjectMapper().readValue(responseString, TiingoCandle[].class);
-      if (tiingoCandleArray == null || responseString==null)
+      if (tiingoCandleArray == null || responseString == null)
         throw new StockQuoteServiceException("Invalid Response Found");
     } catch (JsonProcessingException e) {
-      throw new StockQuoteServiceException(e.getMessage());  
+      throw new StockQuoteServiceException(e.getMessage());
     }
     return Arrays.stream(tiingoCandleArray).sorted(Comparator.comparing(Candle::getDate))
         .collect(Collectors.toList());
@@ -78,18 +85,17 @@ public class TiingoService implements StockQuotesService {
 
 
 
-
-
   // TODO: CRIO_TASK_MODULE_EXCEPTIONS
-  //  1. Update the method signature to match the signature change in the interface.
-  //     Start throwing new StockQuoteServiceException when you get some invalid response from
-  //     Tiingo, or if Tiingo returns empty results for whatever reason, or you encounter
-  //     a runtime exception during Json parsing.
-  //  2. Make sure that the exception propagates all the way from
-  //     PortfolioManager#calculateAnnualisedReturns so that the external user's of our API
-  //     are able to explicitly handle this exception upfront.
+  // 1. Update the method signature to match the signature change in the interface.
+  // Start throwing new StockQuoteServiceException when you get some invalid response from
+  // Tiingo, or if Tiingo returns empty results for whatever reason, or you encounter
+  // a runtime exception during Json parsing.
+  // 2. Make sure that the exception propagates all the way from
+  // PortfolioManager#calculateAnnualisedReturns so that the external user's of our API
+  // are able to explicitly handle this exception upfront.
 
-  //CHECKSTYLE:OFF
+  // CHECKSTYLE:OFF
+
 
 
 }

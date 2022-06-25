@@ -67,8 +67,10 @@ public class AlphavantageService implements StockQuotesService {
   public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to)
       throws StockQuoteServiceException {
     // String checkPremiumResponse = "{\n"
-    //     + "    \"Note\": \"Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.\"\n"
-    //     + "}";
+    // + " \"Note\": \"Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls
+    // per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you
+    // would like to target a higher API call frequency.\"\n"
+    // + "}";
     // String responseString;
     // do{
     // responseString = restTemplate.getForObject(buildURL(symbol), String.class);
@@ -79,7 +81,7 @@ public class AlphavantageService implements StockQuotesService {
     try {
       alphavantageDailyResponse =
           getObjectMapper().readValue(responseString, AlphavantageDailyResponse.class);
-      if (alphavantageDailyResponse.getCandles() == null || responseString==null)
+      if (alphavantageDailyResponse.getCandles() == null || responseString == null)
         throw new StockQuoteServiceException("Invalid Response Found");
     } catch (JsonProcessingException e) {
       throw new StockQuoteServiceException(e.getMessage());

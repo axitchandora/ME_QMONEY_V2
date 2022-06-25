@@ -279,14 +279,14 @@ public class PortfolioManagerApplication {
     String contents = readFileAsString(file);
     ObjectMapper objectMapper = getObjectMapper();
     PortfolioManager portfolioManager =
-        PortfolioManagerFactory.getPortfolioManager(new RestTemplate());
+        PortfolioManagerFactory.getPortfolioManager("tingoo",new RestTemplate());
     List<PortfolioTrade> portfolioTrades =
         objectMapper.readValue(contents, new TypeReference<List<PortfolioTrade>>() {});
     // List<Candle> candles =
     // ((PortfolioManagerImpl)portfolioManager).getStockQuote(portfolioTrade.getSymbol(),
     // portfolioTrade.getPurchaseDate(), endDate);
     List<AnnualizedReturn> aa =
-        portfolioManager.calculateAnnualizedReturn(portfolioTrades, endDate);
+        portfolioManager.calculateAnnualizedReturnParallel(portfolioTrades, endDate,10);
     return aa;
   }
 
@@ -302,7 +302,7 @@ public class PortfolioManagerApplication {
     // printJsonObject(mainCalculateSingleReturn(args));
     // printJsonObject(mainCalculateSingleReturn(new String[] {"trades.json", "2020-01-01"}));
     // printJsonObject(mainCalculateReturnsAfterRefactor(args));
-    //printJsonObject(mainCalculateReturnsAfterNewServiceProvider(new String[] {"tradesOfSanket.json", "2020-01-01"}));
+    //printJsonObject(mainCalculateReturnsAfterNewServiceProvider(new String[] {"trades.json", "2020-01-01"}));
   }
 
 }
