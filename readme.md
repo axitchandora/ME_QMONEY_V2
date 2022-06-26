@@ -10,10 +10,10 @@
 -   Refactored code to add support for multiple stock quote services.    
 -   Improved application stability and performance.    
 ---
-![image alt text](https://storage.googleapis.com/crio-content-container-assets/ME_ME_QMONEY_MODULE_PROJECT_REPORT_image_0.png)
+![QMoney Architecture](https://github.com/axitchandora/Personal-Stuff/blob/main/Images/ME_QMONEY_V2_MODULE_ME_QMONEY_V2_MODULE_JSON_PARSING_1633318898_image_1.png)
 
 <p align="center"> <b>QMoney Architecture</b> </p>
 
-![image alt text](https://storage.googleapis.com/crio-content-container-assets/ME_ME_QMONEY_MODULE_PROJECT_REPORT_image_1.png)
+![QMoney Portfolio Manager Interface](https://github.com/axitchandora/Personal-Stuff/blob/main/Images/ME_ME_QMONEY_MODULE_PROJECT_REPORT_image_1.png)
 <p align="center"> <b>QMoney Portfolio Manager Interface</b> </p>
 
